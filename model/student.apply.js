@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
+const crypto = require("crypto");
 
 const { Schema } = mongoose;
+
 
 const newStudent = new Schema({
   fName: {
@@ -16,10 +18,11 @@ const newStudent = new Schema({
     required: true,
     unique: true,
   },
+  studentID: String,
   CreatedAt: {
-      type: Date,
-      default: Date.now()
-  }
+    type: Date,
+    default: Date.now(),
+  },
 });
 
 module.exports = student = mongoose.model("students", newStudent);

@@ -1,13 +1,19 @@
 const validateForm = (body) => {
-   const regFormValidation =  [
-        body("fName", "Provide a First Name").notEmpty(),
-        body("email", "Provide a valid Email").isEmail(),
-        body("lName", "Provide a Last Name").notEmpty(),
-      ]
+  const regFormValidation = [
+    body("fName", "Provide a First Name").notEmpty(),
+    body("email", "Provide a valid Email").isEmail(),
+    body("lName", "Provide a Last Name").notEmpty(),
+  ];
 
-      return {
-          regFormValidation
-      }
-}
+  const loginFormValidation = [
+    body("email").isEmail(),
+    body("sudentID").notEmpty()
+  ];
 
-module.exports = validateForm
+  return {
+    regFormValidation,
+    loginFormValidation,
+  };
+};
+
+module.exports = validateForm;
