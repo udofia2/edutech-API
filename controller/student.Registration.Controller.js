@@ -39,7 +39,7 @@ const studentForm = (validationResult, Students, uuidv4, bcrypt) => {
       await newStudent.save();
 
       res.json({msg: "Your registration is successful",
-    instruction: 'Your Student ID will be required to login',
+    instruction: 'Your StudentId will be required to login, Secure it properly',
   StudentId: studentID});
     } catch (err) {
       console.error(err);
@@ -51,13 +51,26 @@ const studentForm = (validationResult, Students, uuidv4, bcrypt) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+
+    const { email, studentID} = req.body
     
     const student = await Students.findOne({email})
-    if(student) {
-      res.json({msg: `${student} is already registered`})
+    if(!student) {
+      return res.json({msg: `${email} is not a student, Proceed to registration page`})
     }
 
-    res.send('Login in here')
+    const isMatch = await bcrypt.compare(studentID, student.studentID)
+
+    if(!isMatch){
+      return res.json({msg: 'Invalid Credentials'})
+    }
+
+    if(isMatch){
+      let { fName, lName} = student
+      fName.toUpperCase()
+
+      res.json({msg: `Welcome back ${fName.toUpperCase()} ${lName.toUpperCase()}`})
+    }
   }
   return {
     createStudent,

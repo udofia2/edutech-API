@@ -7,7 +7,7 @@ const validateForm = (body) => {
 
   const loginFormValidation = [
     body("email").isEmail(),
-    body("sudentID").notEmpty()
+    body("studentID").notEmpty()
   ];
 
   return {
