@@ -5,7 +5,7 @@ const Students = require("./../model/student.apply");
 const { body, validationResult } = require("express-validator");
 const { createStudent, getStudents, loginStudent } = require('./../controller/student.Registration.Controller')(validationResult, Students, uuidv4, bcrypt)
 const { regFormValidation, loginFormValidation } = require("./../middleware/formValidation")(body);
-
+const { auth } = require("./../middleware/auth");
 const { Router } = express;
 
 const studentRoutes = Router();
@@ -16,6 +16,6 @@ studentRoutes
   .route("/student/new")
   .post(regFormValidation, createStudent);
 
-  studentRoutes.route('/student/login').post(loginFormValidation, loginStudent)
+  studentRoutes.route('/student/login').post(loginFormValidation, auth, loginStudent)
 
 module.exports = studentRoutes;

@@ -1,7 +1,12 @@
-const studentForm = (validationResult, Students, uuidv4, bcrypt) => {
+const { compareSync } = require("bcrypt");
+const config = require('./../config/default')
+const jwt = require('jsonwebtoken')
+
+const studentActions = (validationResult, Students, uuidv4, bcrypt) => {
   const getStudents = async (req, res) => {
     try {
       const students = await Students.find({}).sort({CreatedAt: 'desc'});
+
       res.json({ total: students.length, students });
     } catch (err) {
       console.error(err);
@@ -38,11 +43,32 @@ const studentForm = (validationResult, Students, uuidv4, bcrypt) => {
 
       await newStudent.save();
 
-      res.json({msg: "Your registration is successful",
-    instruction: 'Your StudentId will be required to login, Secure it properly',
-  StudentId: studentID});
+      const payload = {
+        user: {
+          id: newStudent._id
+        }
+      };
+
+      jwt.sign(
+        payload,
+        config.jwtsecret,
+        {
+          expiresIn: 3600 * 78
+        },
+        (err, token) => {
+          if (err) throw err;
+          console.log(token)
+          // res.json({ token });
+          res.json({token,
+            msg: "Your registration is successful",
+          instruction: 'Your StudentId will be required to login, Secure it properly',
+          StudentId: studentID});
+        }
+      );
+
     } catch (err) {
       console.error(err);
+      return res.status(500).send("Server Error");
     }
   };
 
@@ -71,6 +97,7 @@ const studentForm = (validationResult, Students, uuidv4, bcrypt) => {
 
       res.json({msg: `Welcome back ${fName.toUpperCase()} ${lName.toUpperCase()}`})
     }
+    
   }
   return {
     createStudent,
@@ -79,4 +106,4 @@ const studentForm = (validationResult, Students, uuidv4, bcrypt) => {
   };
 };
 
-module.exports = studentForm;
+module.exports = studentActions;
