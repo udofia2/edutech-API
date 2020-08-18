@@ -10,5 +10,6 @@ app.use(bodyParser.json())
 app.use(express.urlencoded({extended: true}))
 
 app.use('/api/v1', require('./routes/studentRegistration.Router'))
+app.use('/api/v1', require('./routes/guardian.Router'))
 
 app.listen(config.PORT, () => console.log(`Server is running on localhost:${config.PORT}`))

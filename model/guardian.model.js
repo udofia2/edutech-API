@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+const student = require('./../model/student.apply')
 
 const { Schema } = mongoose;
 
-const parentSchema = new Schema({
+const guardianSchema = new Schema({
   email: {
     type: String,
     required: true,
@@ -13,10 +14,10 @@ const parentSchema = new Schema({
     type: Date,
     default: Date.now(),
   },
-  ward: {
+  student: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "student"
+    ref: 'students'
   }
 });
 
-module.exports = student = mongoose.model("students", newStudent);
+module.exports = guardains = mongoose.model("guardians", guardianSchema);

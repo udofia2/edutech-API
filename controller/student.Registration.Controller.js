@@ -1,6 +1,7 @@
 const { compareSync } = require("bcrypt");
 const config = require('./../config/default')
 const jwt = require('jsonwebtoken')
+const Guardians = require('./../model/guardian.model')
 
 const studentActions = (validationResult, Students, uuidv4, bcrypt) => {
   const getStudents = async (req, res) => {
@@ -20,13 +21,18 @@ const studentActions = (validationResult, Students, uuidv4, bcrypt) => {
     }
 
     const studentID = uuidv4().slice(0, 8)
-    const { fName, lName, email } = req.body;
+    const { fName, lName, email, parentEmail, classes, DOB, age, gender } = req.body;
     try {
       const newStudent = new Students({
         fName,
         lName,
         email,
         studentID,
+        parentEmail,
+        classes,
+        DOB,
+        age,
+        gender
       });
 
       const isMatch = await Students.findOne({ email });
@@ -42,6 +48,16 @@ const studentActions = (validationResult, Students, uuidv4, bcrypt) => {
       newStudent.studentID = hash;
 
       await newStudent.save();
+
+      const parentID = uuidv4().slice(-12)
+      const guardian = new Guardians({
+        email: newStudent.parentEmail,
+        parentID,
+        wards: req.user
+      })
+
+      guardian.save()
+
 
       const payload = {
         user: {
@@ -95,7 +111,8 @@ const studentActions = (validationResult, Students, uuidv4, bcrypt) => {
       let { fName, lName} = student
       fName.toUpperCase()
 
-      res.json({msg: `Welcome back ${fName.toUpperCase()} ${lName.toUpperCase()}`})
+      res.json({
+        msg: `Welcome back ${fName.toUpperCase()} ${lName.toUpperCase()}`})
     }
     
   }

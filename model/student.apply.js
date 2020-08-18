@@ -31,11 +31,12 @@ const newStudent = new Schema({
   DOB: {
     type: String,
   },
-  class: {
+  classes: {
     type: String,
   },
   parentEmail: {
-    type: String
+    type: String,
+    required: true
   },
   Admitted: {
     type: Boolean
