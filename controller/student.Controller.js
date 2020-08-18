@@ -1,7 +1,7 @@
 const { compareSync } = require("bcrypt");
-const config = require('./../config/default')
+const config = require('../config/default')
 const jwt = require('jsonwebtoken')
-const Guardians = require('./../model/guardian.model')
+const Guardians = require('../model/guardian.model')
 
 const studentActions = (validationResult, Students, uuidv4, bcrypt) => {
   const getStudents = async (req, res) => {
@@ -116,10 +116,24 @@ const studentActions = (validationResult, Students, uuidv4, bcrypt) => {
     }
     
   }
+
+  const checkAdmission = async (req, res) => {
+    const {email} = req.body.email
+    const admitted = await Students.findOne({email})
+    
+    if(!admitted){
+      return res.json(`Sorry!!!, ${admitted} is not admitted student.`)
+    }
+
+    res.json(`Congration!!!, ${admitted.fName} you are have been admitted`)
+    }
+
+
   return {
     createStudent,
     getStudents,
-    loginStudent
+    loginStudent,
+    checkAdmission
   };
 };
 
