@@ -13,5 +13,6 @@ app.use('/api/v1', require('./routes/students.Router'))
 app.use('/api/v1', require('./routes/guardian.Router'))
 app.use('/api/v1', require('./routes/admin.Router'))
 app.use('/api/v1', require('./routes/teachers.Router'))
+app.use('/api/v1', require('./routes/management.Dashboard.Router'))
 
 app.listen(config.PORT, () => console.log(`Server is running on localhost:${config.PORT}`))
