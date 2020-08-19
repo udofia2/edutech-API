@@ -12,7 +12,7 @@ const validateForm = (body) => {
 
   return {
     regFormValidation,
-    loginFormValidation,
+    loginFormValidation
   };
 };
 
