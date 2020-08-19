@@ -4,9 +4,10 @@ const jwt = require("jsonwebtoken");
 const Guardians = require("../model/guardian.model");
 
 const studentActions = (validationResult, Students, uuidv4, bcrypt) => {
-  //@route    Get api/v1/students
-  //@desc     Fetch all Students
-  //@access   Public (Everyone can access )
+  /**@route    Get api/v1/students
+   *@desc     Fetch all Students
+   *@access   Public (Everyone can access )
+   */
   const getStudents = async (req, res) => {
     try {
       const students = await Students.find({}).sort({ CreatedAt: "desc" });
@@ -17,9 +18,10 @@ const studentActions = (validationResult, Students, uuidv4, bcrypt) => {
     }
   };
 
-  //@route    Post api/v1/students
-  //@desc     Create a new Student
-  //@access   Public (Everyone can access )
+  /**@route    Post api/v1/students
+   *@desc     Create a new Student
+   *@access   Public (Everyone can access )
+   */
   const createStudent = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -104,9 +106,10 @@ const studentActions = (validationResult, Students, uuidv4, bcrypt) => {
     }
   };
 
-  //@route    Post api/v1/students
-  //@desc     Login a Registered Student
-  //@access   Private (Everyone can access )
+  /**@route    Post api/v1/students
+   *@desc     Login a Registered Student
+   *@access   Private (Everyone can access )
+   */
   const loginStudent = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -137,9 +140,10 @@ const studentActions = (validationResult, Students, uuidv4, bcrypt) => {
       });
     }
   };
-  //@route    Post api/v1/students
-  //@desc     check if a student is admitted
-  //@access   Public (Everyone can access )
+  /**@route    Post api/v1/students
+   *@desc     check if a student is admitted
+   *@access   Public (Everyone can access )
+   */
   const checkAdmission = async (req, res) => {
     const { email } = req.body;
 

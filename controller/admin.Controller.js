@@ -1,16 +1,21 @@
 const adminController = (Admin, bcrypt) => {
-  
-  //Fetch all admin
+  /**@route   GET api/v1/admins
+   *@desc     Fetch all admins
+   *@access   Public (Everyone can access )
+   */
   const admins = async (req, res) => {
-    
-    try{
-      const allAdmin = await Admin.find({})
-      res.json(allAdmin)
-    }catch(err) {
-      console.error(err)
+    try {
+      const allAdmin = await Admin.find({});
+      res.json(allAdmin);
+    } catch (err) {
+      console.error(err);
     }
-  }
-  //create Admin
+  };
+
+  /**@route   POST api/v1/new/admin
+   *@desc     Create an admin
+   *@access   Public (Everyone can access )
+   */
   const createAdmin = async (req, res) => {
     const { name, email, password, parents, students } = req.body;
 
@@ -29,21 +34,24 @@ const adminController = (Admin, bcrypt) => {
 
       await admin.save();
 
-      res.json({admin})
+      res.json({ admin });
     } catch (err) {
       console.error(err);
     }
   };
 
-  //Login Admin
+  /**@route   POST api/v1/admins
+   *@desc     Logs in an admin
+   *@access   Public (Everyone can access )
+   */
   const adminLogin = async (req, res) => {
-    res.json('Admin Logged in success...')
-  }
+    res.json("Admin Logged in success...");
+  };
 
   return {
     createAdmin,
     adminLogin,
-    admins
+    admins,
   };
 };
 
