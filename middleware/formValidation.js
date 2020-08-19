@@ -10,9 +10,15 @@ const validateForm = (body) => {
     body("studentID").notEmpty()
   ];
 
+  const teacherloginFormValidation = [
+    body("email").isEmail(),
+    body("password").notEmpty()
+  ];
+
   return {
     regFormValidation,
-    loginFormValidation
+    loginFormValidation,
+    teacherloginFormValidation
   };
 };
 
