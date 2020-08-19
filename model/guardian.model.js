@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const student = require('./../model/student.apply')
 
 const { Schema } = mongoose;
 

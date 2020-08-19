@@ -1,7 +1,7 @@
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
-const Students = require("../model/student.apply");
+const Students = require("../model/student.model");
 const { body, validationResult } = require("express-validator");
 const {
   createStudent,
