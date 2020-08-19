@@ -1,12 +1,16 @@
 const managment = (Teacher, Students, Guardains) => {
-    const students = async (req, res) => {
-        
-        res.json('Welcome to the management Dashboard')
-    }
+  /**@route   GET api/v1/management/dashboard
+   *@desc     Fetch all Students
+   *@access   Protected (Only authorized users can access )
+   */
+  const students = async (req, res) => {
+    const teachers = await Teacher.find({}).select("-password  -__v");
+    res.json(teachers);
+  };
 
-    return {
-        students
-    }
-}
+  return {
+    students,
+  };
+};
 
-module.exports = managment
+module.exports = managment;
