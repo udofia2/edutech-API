@@ -34,6 +34,6 @@ studentRoutes
 
 studentRoutes
   .route("/checkAdmission")
-  .get(checkAdmission);
+  .post(checkAdmission);
 
 module.exports = studentRoutes;

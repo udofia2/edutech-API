@@ -12,6 +12,10 @@ const  adminSchema = new Schema({
     required: true,
     default: "admin",
   },
+  email: {
+    type: String,
+    default: 'admin@login.com'
+  },
   parents: {
     type: Schema.Types.ObjectId,
     ref: "guardians",

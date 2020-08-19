@@ -1,10 +1,21 @@
-const adminController = () => {
+const adminController = (Admin, bcrypt) => {
+  
+  //Fetch all admin
+  const admins = async (req, res) => {
+    
+    try{
+      const allAdmin = await Admin.find({})
+      res.json(allAdmin)
+    }catch(err) {
+      console.error(err)
+    }
+  }
   //create Admin
   const createAdmin = async (req, res) => {
-    const { name, password, parents, students } = req.body;
+    const { name, email, password, parents, students } = req.body;
 
     try {
-      const admin = new admin({
+      const admin = new Admin({
         name,
         email,
         parents,
@@ -12,8 +23,7 @@ const adminController = () => {
         password,
       });
 
-      newStudent.studentID = hash;
-      const salt = bcrypt.genSalt(10);
+      const salt = await bcrypt.genSalt(10);
       const hash = await bcrypt.hash(password, salt);
       admin.password = hash;
 
@@ -23,11 +33,17 @@ const adminController = () => {
     } catch (err) {
       console.error(err);
     }
-    res.json("am Admin");
   };
+
+  //Login Admin
+  const adminLogin = async (req, res) => {
+    res.json('Admin Logged in success...')
+  }
 
   return {
     createAdmin,
+    adminLogin,
+    admins
   };
 };
 
